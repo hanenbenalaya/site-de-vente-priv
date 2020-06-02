@@ -1,6 +1,6 @@
  package com.hanen.site.de.vente.priv.model;
 
-import java.util.Date;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +22,7 @@ public class Commande {
 
 	private long id;
 	
-	 private Date  date_commande;
+	 private String  date_commande;
 	 private Double totale_comande;
 	 private String description;
 }
