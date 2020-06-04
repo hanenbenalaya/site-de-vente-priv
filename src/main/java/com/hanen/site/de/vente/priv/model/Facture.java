@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -24,4 +26,8 @@ public class Facture {
 	 private Double tva;
 	 private Double remise;
 	 private Double totale_facture;
+	
+	  @OneToOne
+	  @JoinColumn(name = "commande")
+	  private Commande cmd;
 }
