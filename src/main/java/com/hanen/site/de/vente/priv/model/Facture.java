@@ -20,7 +20,7 @@ import lombok.ToString;
 public class Facture {
 
 	@Id
-    @GeneratedValue (strategy=GenerationType.IDENTITY)  
+    @GeneratedValue (strategy=GenerationType.AUTO)  
     private long id;
 	
 	 private Double tva;

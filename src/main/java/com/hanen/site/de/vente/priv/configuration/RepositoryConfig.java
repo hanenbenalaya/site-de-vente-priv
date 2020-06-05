@@ -19,5 +19,6 @@ public class RepositoryConfig implements RepositoryRestConfigurer{
 
    public void configureRepositoryRestCongiguration(RepositoryRestConfiguration config) {
 		config.exposeIdsFor(entityManager.getMetamodel().getEntities().stream().map(Type::getJavaType).toArray(Class[]::new));
+   
    }
 }

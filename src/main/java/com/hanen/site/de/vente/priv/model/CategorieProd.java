@@ -19,13 +19,13 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class CategorieProd {
+public class CategorieProd  {
 	@Id
-    @GeneratedValue (strategy=GenerationType.IDENTITY)  
-
-	private long id;
+    @GeneratedValue (strategy=GenerationType.AUTO)  
+    private long id;
 
 	private String nom_categorie;
+	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="categorie")
 	private Set<Produit> produit;
 

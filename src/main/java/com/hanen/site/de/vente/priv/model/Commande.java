@@ -23,9 +23,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-public class Commande {
+public class Commande  {
+	
 	@Id
-    @GeneratedValue (strategy=GenerationType.IDENTITY)  
+    @GeneratedValue (strategy=GenerationType.AUTO)  
 
 	private long cmd_id;
 	
