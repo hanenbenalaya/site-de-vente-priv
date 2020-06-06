@@ -2,17 +2,12 @@
 
 
 
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -25,8 +20,9 @@ import lombok.ToString;
 @ToString
 public class Commande  {
 	
+	@Getter
 	@Id
-    @GeneratedValue (strategy=GenerationType.AUTO)  
+    @GeneratedValue (strategy=GenerationType.IDENTITY)  
 
 	private long cmd_id;
 	
@@ -35,20 +31,7 @@ public class Commande  {
 	 private String description;
 	 
 	 
-	    @ManyToOne
-		@JoinColumn(name="clt_id",nullable=false)
-		private Client client;
-	    
-	    
-	    @OneToOne
-		private Facture facture;
-	    
-	    @ManyToMany
-		@JoinTable(name="produitacmd",
-		joinColumns=@JoinColumn(name="cmd_id"),
-		inverseJoinColumns=@JoinColumn(name="idProduit"))
-        private Set<Produit> listeproduit;
-		
+	   
 	    
 	    
 }

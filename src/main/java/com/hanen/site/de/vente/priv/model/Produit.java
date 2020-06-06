@@ -1,15 +1,11 @@
 package com.hanen.site.de.vente.priv.model;
 
-import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -33,15 +29,8 @@ public class Produit {
 	  private String  description_produit;
 	  private Double quantite_stock;
 	  
-@ManyToOne
-@JoinColumn(name="categoriId",nullable=false)
-private CategorieProd categorie;
 
 
 
-	  @ManyToMany
-	  @JoinTable(name="produit_cmd")
-	  private Set<Commande> listecmd;
-	  
 
 }
