@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.hanen.site.de.vente.priv.model.Produit;
 
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 public interface ProduitRepos extends JpaRepository<Produit, Long> {
 	
 	@RestResource(path = "categorieid")
 	 Page<Produit>	findByCategorieId(@Param("id") Long id,Pageable pageable );
  
+	
+	
+	@RestResource(path = "searchbykeyword")
+	 Page<Produit>	findBynomProduitContaining(@Param("nomProduit") String keyword,Pageable pageable );
+
 }
