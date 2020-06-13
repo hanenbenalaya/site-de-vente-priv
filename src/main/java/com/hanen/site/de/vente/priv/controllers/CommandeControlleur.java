@@ -61,8 +61,7 @@ public class CommandeControlleur {
 				.orElseThrow(() -> new ResourceNotFoundException(" Commande not found for this id :: " + cmdId));
 
 		cmd.setCmd_id(cmdDetails.getCmd_id());
-        cmd.setDate_commande(cmdDetails.getDate_commande());
-        cmd.setDescription(cmdDetails.getDescription());
+      
         cmd.setTotale_comande(cmdDetails.getTotale_comande());
        
 

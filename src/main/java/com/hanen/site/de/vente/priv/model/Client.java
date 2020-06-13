@@ -29,6 +29,7 @@ public class Client {
 	private String email;
 	private long telephone ;
 	private String mdp;
-	
+	private String role;
+
 
 }
