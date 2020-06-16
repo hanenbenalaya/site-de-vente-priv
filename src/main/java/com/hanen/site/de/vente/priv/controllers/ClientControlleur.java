@@ -79,9 +79,10 @@ public class ClientControlleur {
 			throws ResourceNotFoundException {
 		Client clt = clientService.getClientById(cltId)
 				.orElseThrow(() -> new ResourceNotFoundException("Client not found for this id :: " + cltId));
-
+System.out.println("client a supprimé"+clt);
 		clientService.deleteClient(clt);
-		
+		System.out.println("client  supprimé");
+
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("deleted", Boolean.TRUE);
 		return response;

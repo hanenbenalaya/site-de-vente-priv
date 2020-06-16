@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hanen.site.de.vente.priv.exception.ResourceNotFoundException;
+import com.hanen.site.de.vente.priv.model.CategorieProd;
 import com.hanen.site.de.vente.priv.model.Produit;
+import com.hanen.site.de.vente.priv.model.ProduitOperation;
+import com.hanen.site.de.vente.priv.services.CategorieService;
 import com.hanen.site.de.vente.priv.services.ProduitService;
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 
 @RestController
 @RequestMapping("/api/v1")
@@ -30,6 +33,9 @@ public class ProduitControlleur {
 	
 	@Autowired
 	private ProduitService produitService;
+	@Autowired
+	private CategorieService  categorieService;
+	
 	
 	
 
@@ -71,7 +77,32 @@ public class ProduitControlleur {
 		final Produit updatedProduit = produitService.updateProduit(produitDetails);
 		return ResponseEntity.ok(updatedProduit);
 	}
-	
+	@CrossOrigin("*")
+	@PostMapping("/produitscateg")
+	public Produit addProduit(
+			@Valid @RequestBody ProduitOperation produitcateg) throws ResourceNotFoundException {
+		Long id= produitcateg.getCategorie();
+		System.out.println("produit recu nom :"+produitcateg.getNomProduit());
+		System.out.println("produit recu categ :"+produitcateg.getCategorie());
+		System.out.println("produit recu  descrip:"+produitcateg.getDescription_produit());
+		System.out.println("produit recu image :"+produitcateg.getUrlImage_produit());
+		System.out.println("produit recu prix :"+produitcateg.getPrixProduit());
+		System.out.println("produit recu qstck:"+produitcateg.getQuantite_stock());
+
+		CategorieProd categ = categorieService.getCategorieById(id)
+				.orElseThrow(() -> new ResourceNotFoundException(" categorie not found for this id :: " + id));
+System.out.println("categorie:"+id);
+Produit produit=new Produit();
+		produit.setNomProduit(produitcateg.getNomProduit());
+        produit.setPrixProduit(produitcateg.getPrixProduit());
+		produit.setUrlImage_produit(produitcateg.getUrlImage_produit());
+		produit.setDescription_produit(produitcateg.getDescription_produit());
+		produit.setQuantite_stock(produitcateg.getQuantite_stock());
+		produit.setCategorie(categ);
+
+
+		return produitService.createProduit(produit);
+	}
 	@DeleteMapping("/produits/{id}")
 	public Map<String, Boolean> deleteProduit(@PathVariable(value = "id") Long produitId)
 			throws ResourceNotFoundException {
