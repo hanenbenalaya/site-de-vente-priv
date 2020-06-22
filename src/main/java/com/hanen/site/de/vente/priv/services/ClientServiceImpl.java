@@ -1,15 +1,20 @@
 package com.hanen.site.de.vente.priv.services;
 
+
+
 import java.util.List;
-
-
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.hanen.site.de.vente.priv.model.Client;
 import com.hanen.site.de.vente.priv.repos.ClientRepos;
+@CrossOrigin("http://localhost:4200")
+
 @Service
 public class ClientServiceImpl implements ClientService {
 
@@ -42,6 +47,12 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public void deleteClient(Client client) {
 		clientRepository.delete(client);		
+	}
+
+	@Override
+	public Optional<Client> getClientByemail(String email) {
+		return  this.clientRepository.findByemail(email);
+		
 	}
 
 }

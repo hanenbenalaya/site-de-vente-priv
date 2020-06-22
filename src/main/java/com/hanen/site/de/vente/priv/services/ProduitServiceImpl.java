@@ -48,6 +48,7 @@ public class ProduitServiceImpl implements ProduitService{
 
 	@Override
 	public void deleteProduit(Produit produit) {
+		produit.setCategorie(null);
 		produitRepository.delete(produit);
 		
 	}

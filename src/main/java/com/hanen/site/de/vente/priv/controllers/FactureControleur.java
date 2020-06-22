@@ -62,8 +62,6 @@ public class FactureControleur {
 				.orElseThrow(() -> new ResourceNotFoundException(" Facture not found for this id :: " + fctId));
 
 		fct.setId(fctDetails.getId());
-        fct.setTva(fctDetails.getTva());
-        fct.setRemise(fctDetails.getRemise());
         fct.setTotale_facture(fctDetails.getTotale_facture());
        
 

@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,12 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hanen.site.de.vente.priv.exception.ResourceNotFoundException;
 import com.hanen.site.de.vente.priv.model.CategorieProd;
 import com.hanen.site.de.vente.priv.model.Produit;
 import com.hanen.site.de.vente.priv.model.ProduitOperation;
+import com.hanen.site.de.vente.priv.repos.ProduitRepos;
 import com.hanen.site.de.vente.priv.services.CategorieService;
 import com.hanen.site.de.vente.priv.services.ProduitService;
 @CrossOrigin("*")
@@ -37,14 +41,15 @@ public class ProduitControlleur {
 	private CategorieService  categorieService;
 	
 	
-	
+	@Autowired
+	private ProduitRepos produitRepos;
 
 
 
 	@GetMapping("/produits")
-	public List<Produit> getAllProduits() {
+	public Page<Produit> getAllProduits(@RequestParam(name="page")int page,@RequestParam(name="size", defaultValue="5")int size) {
 
-		List<Produit> produits = produitService.getAllProduits();
+		Page<Produit> produits = produitRepos.findAll(PageRequest.of(page, size));
 		return produits;
 	}
 	@GetMapping("/produits/{id}")
@@ -103,12 +108,14 @@ Produit produit=new Produit();
 
 		return produitService.createProduit(produit);
 	}
-	@DeleteMapping("/produits/{id}")
+	@CrossOrigin("*")
+	@DeleteMapping("/proddel/{id}")
 	public Map<String, Boolean> deleteProduit(@PathVariable(value = "id") Long produitId)
 			throws ResourceNotFoundException {
 		Produit produit = produitService.getProduitById(produitId)
+				
 				.orElseThrow(() -> new ResourceNotFoundException("product not found for this id :: " + produitId));
-
+System.out.println("produit a supprimé"+produit);
 		produitService.deleteProduit(produit);
 		
 		Map<String, Boolean> response = new HashMap<>();

@@ -62,7 +62,6 @@ public class CommandeControlleur {
 
 		cmd.setCmd_id(cmdDetails.getCmd_id());
       
-        cmd.setTotale_comande(cmdDetails.getTotale_comande());
        
 
 

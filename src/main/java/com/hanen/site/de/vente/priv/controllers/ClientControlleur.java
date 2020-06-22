@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,24 +19,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hanen.site.de.vente.priv.exception.ResourceNotFoundException;
+import com.hanen.site.de.vente.priv.model.AuthObj;
 import com.hanen.site.de.vente.priv.model.Client;
+import com.hanen.site.de.vente.priv.repos.ClientRepos;
 import com.hanen.site.de.vente.priv.services.ClientService;
 @CrossOrigin("http://localhost:4200")
 
 @RestController
 @RequestMapping("/api/v1")
 public class ClientControlleur {
-	
+	@Autowired
+	private  ClientRepos clientRepos;
 	@Autowired
 	private ClientService clientService;
-	
-	@GetMapping("/clients")
-	public List<Client> getAllClients() {
+	@CrossOrigin("http://localhost:4200")
 
-		List<Client> clients = clientService.getAllClients();
+	@GetMapping("/clients")
+	public Page<Client> getAllClients(@RequestParam(name="page")int page,@RequestParam(name="size", defaultValue="5")int size) {
+
+		Page<Client> clients = clientRepos.findAll(PageRequest.of(page, size));
 		return clients;
 	}
 	
@@ -87,6 +95,22 @@ System.out.println("client a supprimé"+clt);
 		response.put("deleted", Boolean.TRUE);
 		return response;
 	}
+	
+	
+	@CrossOrigin("http://localhost:4200")
+	@PostMapping("/clientauth")
+	public String getClientId(@Valid @RequestBody AuthObj auth) {
+	
+		Client client = clientService.getClientByemail(auth.getEmail()).get();
+System.out.println("client:"+client);
+		String id =String.valueOf(client.getClt_id());
+		System.out.println("client id :"+id);
+		return (id);
+		
+		
+	}
+	
+	
 	
 	
 

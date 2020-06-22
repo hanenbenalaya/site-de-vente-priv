@@ -22,8 +22,6 @@ public class Facture {
     @GeneratedValue (strategy=GenerationType.IDENTITY)  
     private long id;
 	
-	 private Double tva;
-	 private Double remise;
-	 private Double totale_facture;
+	 private Long totale_facture;
 	
 	}

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hanen.site.de.vente.priv.model.Produit;
 
@@ -18,6 +19,6 @@ public interface ProduitRepos extends JpaRepository<Produit, Long> {
 	
 	
 	@RestResource(path = "searchbykeyword")
-	 Page<Produit>	findBynomProduitContaining(@Param("nomProduit") String keyword,Pageable pageable );
+	 Page<Produit>	findBynomProduitContaining(@RequestParam(name="page",defaultValue="0")int page,@RequestParam(name="size", defaultValue="5")int size,@Param("nomProduit") String keyword );
 
 }
