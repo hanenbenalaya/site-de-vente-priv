@@ -1,9 +1,7 @@
 package com.hanen.site.de.vente.priv.controllers;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -40,7 +38,7 @@ import com.hanen.site.de.vente.priv.services.ClientService ;
 
 @RestController
 @RequestMapping("/api/v1")
-public class LigneCmdControlleur {
+public class LgcmdControlleur {
 	@Autowired
 	private LigneCmdService lignecmdService;
 	
@@ -133,5 +131,5 @@ public class LigneCmdControlleur {
 	}
 	
 	
-	
+
 }

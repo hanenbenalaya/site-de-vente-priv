@@ -19,6 +19,6 @@ public interface ProduitRepos extends JpaRepository<Produit, Long> {
 	
 	
 	@RestResource(path = "searchbykeyword")
-	 Page<Produit>	findBynomProduitContaining(@RequestParam(name="page",defaultValue="0")int page,@RequestParam(name="size", defaultValue="5")int size,@Param("nomProduit") String keyword );
+	 Page<Produit>	findBynomProduitContaining(@Param("nomProduit") String keyword,Pageable pageable );
 
 }

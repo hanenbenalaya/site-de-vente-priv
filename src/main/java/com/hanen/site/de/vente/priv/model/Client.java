@@ -21,8 +21,7 @@ public class Client {
 	
 	@Id
     @GeneratedValue (strategy=GenerationType.IDENTITY)  
-
-	private long clt_id;
+    private long clt_id;
 
 	private String nom;
 	private String prenom;
