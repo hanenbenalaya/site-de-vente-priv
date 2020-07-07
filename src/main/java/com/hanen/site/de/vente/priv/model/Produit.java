@@ -23,7 +23,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class Produit {
-	@Id 
+	  @Id 
 	  @GeneratedValue (strategy=GenerationType.IDENTITY)  
 	  private Long idProduit;
 	

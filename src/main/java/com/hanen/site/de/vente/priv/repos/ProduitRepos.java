@@ -13,7 +13,7 @@ import com.hanen.site.de.vente.priv.model.Produit;
 @CrossOrigin("*")
 public interface ProduitRepos extends JpaRepository<Produit, Long> {
 	
-	@RestResource(path = "categorieid")
+	
 	 Page<Produit>	findByCategorieId(@Param("id") Long id,Pageable pageable );
  
 	

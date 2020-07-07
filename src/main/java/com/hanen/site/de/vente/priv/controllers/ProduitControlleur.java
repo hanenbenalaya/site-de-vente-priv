@@ -1,6 +1,7 @@
 package com.hanen.site.de.vente.priv.controllers;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,6 +55,34 @@ public class ProduitControlleur {
 		Page<Produit> produits = produitRepos.findAll(PageRequest.of(page, size));
 		return produits;
 	}
+	
+	@GetMapping("/produits/{id}/{page}/{size}")
+	  public ResponseEntity<Map<String, Object>> getArtParPage(@PathVariable(value ="id")long  id,
+			  @PathVariable("page") int page, 
+				@PathVariable("size") int size){
+	    try {      
+	      List<Produit> produits = new ArrayList<Produit>();
+	      Pageable paging = PageRequest.of(page, size);
+	      
+	      Page<Produit> pagedResult = produitRepos.findByCategorieId(id, paging);
+	      produits = pagedResult.getContent();
+	      
+	      if (produits.isEmpty()) {
+	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	      }
+	      
+	      Map<String, Object> response = new HashMap<>();
+	      response.put("articles", produits);
+	      response.put("currentPage", pagedResult.getNumber());
+	      response.put("totalItems", pagedResult.getTotalElements());
+	      response.put("totalPages", pagedResult.getTotalPages());
+	      response.put("size", pagedResult.getSize());
+	      
+	      return new ResponseEntity<>(response, HttpStatus.OK);
+	    } catch (Exception e) {
+	      return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+	    }
+	  }
 	@GetMapping("/produits/{id}")
 	public ResponseEntity<Produit> getProduitById(@PathVariable(value = "id") Long produitId) {
 		Produit produit = produitService.getProduitById(produitId).get();

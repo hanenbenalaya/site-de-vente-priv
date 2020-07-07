@@ -103,10 +103,26 @@ System.out.println("client a supprimé"+clt);
 	
 		Client client = clientService.getClientByemail(auth.getEmail()).get();
 System.out.println("client:"+client);
+if (client.getMdp().equals(auth.getPwd())){
 		String id =String.valueOf(client.getClt_id());
 		System.out.println("client id :"+id);
 		return (id);
+}
+return(null);
 		
+	}
+	@CrossOrigin("http://localhost:4200")
+	@PostMapping("/clientauthAdm")
+	public String getClientAdmId(@Valid @RequestBody AuthObj auth) {
+	
+		Client client = clientService.getClientByemail(auth.getEmail()).get();
+System.out.println("client:"+client);
+if (client.getMdp().equals(auth.getPwd())&&(client.getRole().equals("admin"))){
+		String id =String.valueOf(client.getClt_id());
+		System.out.println("client id :"+id);
+		return (id);
+}
+return(null);
 		
 	}
 	
