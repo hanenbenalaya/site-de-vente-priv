@@ -54,8 +54,17 @@ public class ClientControlleur {
 	}
 	
 	@PostMapping("/clients")
-	public Client createClient(@Valid @RequestBody Client clteg) {
-		return clientService.createClient(clteg);
+	public String  createClient(@Valid @RequestBody Client clteg)throws ResourceNotFoundException {
+		System.out.println("client recu :"+clteg);
+
+		Client client = clientService.getClientByemail(clteg.getEmail()).orElse(null);
+		System.out.println("client trouvé "+client);
+		String id =String.valueOf(clteg.getClt_id());
+
+		if(client==null) {
+		 clientService.createClient(clteg);
+		 return(id);}
+		return(null);
 	}
 	
 	

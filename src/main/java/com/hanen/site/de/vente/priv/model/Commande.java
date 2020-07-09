@@ -26,8 +26,8 @@ public class Commande  {
 	
 	@Id
     @GeneratedValue (strategy=GenerationType.IDENTITY)  
-
-	private long cmd_id;
+    private long cmd_id;
+	
 	 @OneToOne
 		@JoinColumn(name="id",nullable=false)
         private Facture	fact;

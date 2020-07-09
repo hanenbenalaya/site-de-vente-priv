@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hanen.site.de.vente.priv.exception.ResourceNotFoundException;
 import com.hanen.site.de.vente.priv.model.Commande;
 import com.hanen.site.de.vente.priv.model.Facture;
+import com.hanen.site.de.vente.priv.model.Identifier;
 import com.hanen.site.de.vente.priv.model.Produit;
 import com.hanen.site.de.vente.priv.model.Client;
 
@@ -78,23 +79,43 @@ public class LgcmdControlleur {
 	@CrossOrigin("*")
     @PostMapping("/lignecommandefull")
 	public  Commande createfullLigneCommande(@Valid @RequestBody PanierItems panier) throws Exception {
-		Client clt=cltService.getClientById(panier.getClt_id()).orElseThrow(() -> new ResourceNotFoundException(" client not found for this id :: " + panier.getClt_id()));
-		
+		   Identifier j= new Identifier();
+		System.out.println("client id : "+panier.getClt_id());
+
+		Client clt=cltService.getClientById(panier.getClt_id()).get();
+		System.out.println("client: "+clt);
+
 		Commande cmd=new Commande();
-		
 		cmd.setClient(clt);
-		
-		for(int i=0;i< panier.getProduct_list().length;i++  ) {
-			LigneCommande  lcmd= new LigneCommande();
-		    lcmd.setCmd(cmd);
-		
-		Produit p=prodService.getProduitById(panier.getProduct_list()[0].getId()).orElseThrow(() -> new ResourceNotFoundException(" product not found for this id :: " ));
-		
-		lcmd.setProduit(p);
-		}
 		Facture fact=new Facture();
 		fact.setTotale_facture(panier.getMnt_tot());
+		System.out.println("facture: "+fact);
+
+		factService.createFacture(fact);
+		
 		cmd.setFact(fact);
+		System.out.println("cmd"+cmd);
+		cmdService.createCommande(cmd);
+		System.out.println("cmd"+cmd);
+
+		for(int i=0;i< panier.getProduct_list().length;i++  ) {
+			LigneCommande  lcmd= new LigneCommande();
+			  
+		    lcmd.setCmd(cmd);
+			System.out.println("lcmd : "+lcmd);
+
+		Produit p=prodService.getProduitById(panier.getProduct_list()[0].getId()).orElseThrow(() -> new ResourceNotFoundException(" product not found for this id :: " ));
+		System.out.println("produit : "+p);
+
+		lcmd.setMontant_tot(panier.getProduct_list()[i].getPrixtotale());
+		lcmd.setQuantité(panier.getProduct_list()[i].getQuantite());
+
+		lcmd.setProduit(p);
+		System.out.println("lcmd: "+lcmd);
+
+		lignecmdService.createLigneCommande(lcmd);
+		}
+	
 		return  cmd;
 	}
 	
