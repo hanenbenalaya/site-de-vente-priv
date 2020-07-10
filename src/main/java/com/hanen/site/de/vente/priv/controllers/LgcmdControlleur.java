@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hanen.site.de.vente.priv.exception.ResourceNotFoundException;
 import com.hanen.site.de.vente.priv.model.Commande;
 import com.hanen.site.de.vente.priv.model.Facture;
-import com.hanen.site.de.vente.priv.model.Identifier;
 import com.hanen.site.de.vente.priv.model.Produit;
 import com.hanen.site.de.vente.priv.model.Client;
 
@@ -79,7 +78,6 @@ public class LgcmdControlleur {
 	@CrossOrigin("*")
     @PostMapping("/lignecommandefull")
 	public  Commande createfullLigneCommande(@Valid @RequestBody PanierItems panier) throws Exception {
-		   Identifier j= new Identifier();
 		System.out.println("client id : "+panier.getClt_id());
 
 		Client clt=cltService.getClientById(panier.getClt_id()).get();
